@@ -39,10 +39,20 @@ var $return_data = "";
 			{
 				$url_segment = end($IN->SEGS);
 			}
+
+			if ($TMPL->fetch_param('url_segment_2') !== FALSE)
+			{
+				$url_segment_2 = $TMPL->fetch_param('url_segment_2');
+			}
+			else
+			{
+				$url_segment_2 == '';
+			}
 			
 			$conds['pagination_page'] = (preg_match('/^[P][0-9]+$/i', $url_segment)) ? TRUE : FALSE;
 			$conds['category_page'] = (preg_match("/$category_word/", $url_segment)) ? TRUE : FALSE;
 			$conds['yearly_archive_page'] = (preg_match("/^\d{4}$/", $url_segment)) ? TRUE : FALSE;
+                        $conds['monthly_archive_page'] = ($conds['yearly_archive_page'] == TRUE && preg_match("/^\d{2}$/", $url_segment_2)) ? TRUE : FALSE;
 
 		// Prep output
 		$tagdata = $FNS->prep_conditionals($tagdata, $conds);
